@@ -23,7 +23,6 @@ app.get('/tft-info/:summID', async (request, response) => {
 	const api_url = urls.urlStart + urls.tftLeague.replace('{summoner_id}',summID).replace('{api_key}',apiCode);
 	const fetch_repsonse = await fetch(api_url);
 	const json = await fetch_repsonse.json();
-	console.log(json);
 	response.json(json[0]);
 });
 
