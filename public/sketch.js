@@ -8,6 +8,9 @@ function setup(){
 	const tftTier = document.getElementById('tier');
 	const tftRank = document.getElementById('rank');
 	const tftLp = document.getElementById('lp');
+	const tftWins = document.getElementById('wins');
+	const tftLosses = document.getElementById('losses');
+	const tftTotal = document.getElementById('total');
 	const tftHS = document.getElementById('hotStreak');
 	const tftWR = document.getElementById('top-1');
 	document.getElementById('submit').addEventListener('click', async() => { 
@@ -37,9 +40,12 @@ function setup(){
 			tftTier.textContent = `Tier: ${tftInfoJson.tier}`;
 			tftRank.textContent = `Rank: ${tftInfoJson.rank}`;
 			tftLp.textContent = `LP: ${tftInfoJson.leaguePoints}`;
-			tftHS.textContent = tftInfoJson.hotStreak? "Hotstreak: Tak": "Hotstreak: Nie";
 			let wr = (tftInfoJson.wins/tftInfoJson.losses)*100;
 			tftWR.textContent = `Top 1: ${wr}%`;
+			tftWins.textContent = `Top 1: ${tftInfoJson.wins}`;
+			tftLosses.textContent = `Losses: ${tftInfoJson.losses}`;
+			tftTotal.textContent = `Total: ${tftInfoJson.wins + tftInfoJson.losses}`;
+			tftHS.textContent = tftInfoJson.hotStreak? "Hotstreak: Tak": "Hotstreak: Nie";
 		}
 		/*const summID = document.getElementById('summID').textContent;
 		const api_url = `https://eun1.api.riotgames.com/tft/league/v1/entries/by-summoner/${summID}?api_key=RGAPI-ab83542a-5a21-4216-af45-def1238bfa56`;
