@@ -20,12 +20,7 @@ app.use(express.json({limit: '1mb'}));
 
 //get info about summoner
 app.get('/summoner/:summName', async (request, response) => {
-	if(typeof(request.params.summName) !== 'string'){
-		const summNameValue = toString(request.params.summName);
-	}
-	else{
-		const summNameValue = request.params.summName;
-	}
+	const summNameValue = toString(request.params.summName);
 	db.find({name: summNameValue}, async (err, docs) => {
 		//if summoner is not in database
 		if(Object.keys(docs).length === 0){
