@@ -15,6 +15,8 @@ const tftWR = document.getElementById('top-1');
 
 //Get info about summoner from server
 document.getElementById('submit').addEventListener('click', async() => { 
+	if(tftInfo.style.display == 'block')
+		tftInfo.style.display = 'none';
 	let summNameValue = document.getElementById('mood').value;
 	const api_url = `summoner/${summNameValue}`;
 	const response = await fetch(api_url);
