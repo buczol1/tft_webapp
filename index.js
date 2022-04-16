@@ -1,10 +1,12 @@
 const express = require('express');
 const urls = require('./const').urls;
 const apiKey = require('./const').api;
+const regions = require('./const').regions;
 const fetch = require('node-fetch');
 const Datastore = require('nedb');
 const status = require('./functions').checkStatus;
 const functions = require('./functions');
+let region;
 
 //database initialization
 db = new Datastore('database.db');
@@ -19,13 +21,15 @@ app.use(express.static('public'));
 app.use(express.json({limit: '1mb'}));
 
 //get info about summoner
-app.get('/summoner/:summName', async (request, response) => {
-	const summNameValue = request.params.summName;
+app.get('/summoner/:summNameAndRegion', async (request, response) => {
+	const nameAndRegion = request.params.summNameAndRegion.split(',');
+	const summNameValue = nameAndRegion[0];
+	const region = regions[nameAndRegion[1]];
 	db.find({name: summNameValue}, async (err, docs) => {
 		//if summoner is not in database
 		if(Object.keys(docs).length === 0){
 			//load from riot api
-			const api_url = urls.urlStart + urls.summonerByName.replace('{name}',summNameValue).replace('{api_key}',apiKey);
+			const api_url = urls.urlStart.replace('{region}',region) + urls.summonerByName.replace('{name}',summNameValue).replace('{api_key}',apiKey);
 			const fetch_repsonse = await fetch(api_url);
 			const body = await fetch_repsonse.json();
 			if(status(fetch_repsonse) === 200){
@@ -46,9 +50,11 @@ app.get('/summoner/:summName', async (request, response) => {
 });
 
 //force update info about summoner
-app.get(`/summoner-update/:summID`, async (request, response) => {
-	const summID = request.params.summID;
-	const api_url = urls.urlStart + urls.summonerById.replace('{summoner_id}',summID).replace('{api_key}',apiKey);
+app.get(`/summoner-update/:summIDAndRegion`, async (request, response) => {
+	const summIDAndRegion = request.params.summIDAndRegion.split(',');
+	const summID = summIDAndRegion[0];
+	const region = regions[summIDAndRegion[1]];
+	const api_url = urls.urlStart.replace('{region}',region) + urls.summonerById.replace('{summoner_id}',summID).replace('{api_key}',apiKey);
 	const fetch_repsonse = await fetch(api_url);
 	const body = await fetch_repsonse.json();
 	if(status(fetch_repsonse) === 200){
@@ -78,12 +84,14 @@ app.get(`/summoner-update/:summID`, async (request, response) => {
 });
 
 //get tft info about summoner
-app.get('/tft-info/:summID', async (request, response) => {
-	const summID = request.params.summID;
+app.get('/tft-info/:summIDAndRegion', async (request, response) => {
+	const summIDAndRegion = request.params.summIDAndRegion.split(',');
+	const summID = summIDAndRegion[0];
+	const region = regions[summIDAndRegion[1]];
 	db.find({summonerId : summID, queueType: 'RANKED_TFT'}, async (err,docs) => {
 		//if info is not in db
 		if(Object.keys(docs).length === 0){
-			const api_url = urls.urlStart + urls.tftLeague.replace('{summoner_id}',summID).replace('{api_key}',apiKey);
+			const api_url = urls.urlStart.replace('{region}',region) + urls.tftLeague.replace('{summoner_id}',summID).replace('{api_key}',apiKey);
 			const fetch_repsonse = await fetch(api_url);
 			const body = await fetch_repsonse.json();
 			if(status(fetch_repsonse) === 200){

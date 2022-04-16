@@ -13,6 +13,21 @@
 			<h1>TFT APP</h1>
 			<div class="col-5">
 				<div class="form-control">
+					<label for="region">Region:</label>
+					<select name="region" id="region" class="select-form" onChange="updateRegion()">
+						<option value="reg1">Brazil</option>
+						<option class="selected" value="reg2" selected>EUNE</option>
+						<option value="reg3">EUW</option>
+						<option value="reg4">Japan</option>
+						<option value="reg5">Korea</option>
+						<option value="reg6">LA1</option>
+						<option value="reg7">LA2</option>
+						<option value="reg8">NA</option>
+						<option value="reg9">OCE</option>
+						<option value="reg10">TUR</option>
+						<option value="reg11">Ru</option>
+					</select>
+					<br>
 					<label for="mood">Summoner name:</label><input type="text" id="mood" class="input-group"><button id="submit" class="btn btn-primary mt-2">Submit</button>
 				</div>				
 			</div>

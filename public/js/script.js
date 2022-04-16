@@ -13,12 +13,19 @@ const tftTotal = document.getElementById('total');
 const tftHS = document.getElementById('hotStreak');
 const tftWR = document.getElementById('top-1');
 
+let region = 'reg2';
+
+const updateRegion = () => {
+	region = document.getElementById('region').value;
+};
+
+
 //Get info about summoner from server
 document.getElementById('submit').addEventListener('click', async() => { 
 	if(tftInfo.style.display == 'block')
 		tftInfo.style.display = 'none';
 	let summNameValue = document.getElementById('mood').value;
-	const api_url = `summoner/${summNameValue}`;
+	const api_url = `summoner/${summNameValue},${region}`;
 	const response = await fetch(api_url);
 	const responseBody = await response.json();
 	const status = responseBody.statusCode;
@@ -38,7 +45,7 @@ document.getElementById('submit').addEventListener('click', async() => {
 //Get tft info about summoner from server
 document.getElementById('tft-submit').addEventListener('click', async() => { 
 	const summonerID = summid.textContent.replace('Summoner ID: ','');
-	const api_url = `tft-info/${summonerID}`;
+	const api_url = `tft-info/${summonerID},${region}`;
 	const response = await fetch(api_url);
 	const responseBody = await response.json();
 	const status = responseBody.statusCode;
@@ -71,7 +78,7 @@ document.getElementById('tft-submit').addEventListener('click', async() => {
 //Uptade info about summoner from riotapi
 document.getElementById("info-update").addEventListener("click", async () => {
 	const summonerID = summid.textContent.replace('Summoner ID: ','');
-	const api_url = `summoner-update/${summonerID}`;
+	const api_url = `summoner-update/${summonerID},${region}`;
 	const respons = await fetch(api_url);
 	const responseBody = await respons.json();
 	const status = responseBody.statusCode;
