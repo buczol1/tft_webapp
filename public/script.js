@@ -40,7 +40,7 @@ document.getElementById('tft-submit').addEventListener('click', async() => {
 	const response = await fetch(api_url);
 	const responseBody = await response.json();
 	const status = responseBody.statusCode;
-	const tftInfoJson = responseBody.json[0];
+	const tftInfoJson = responseBody.body[0];
 	if(status === 200){
 		if(tftInfo.style.display == 'none')
 			tftInfo.style.display = 'block';
