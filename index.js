@@ -20,9 +20,7 @@ app.use(express.json({limit: '1mb'}));
 
 //get info about summoner
 app.get('/summoner/:summName', async (request, response) => {
-	console.log(typeof(request.params.summName));
 	const summNameValue = request.params.summName;
-	console.log(summNameValue);
 	db.find({name: summNameValue}, async (err, docs) => {
 		//if summoner is not in database
 		if(Object.keys(docs).length === 0){
@@ -55,7 +53,6 @@ app.get(`/summoner-update/:summID`, async (request, response) => {
 	const body = await fetch_repsonse.json();
 	if(status(fetch_repsonse) === 200){
 		db.find({id: summID},(err,docs)=>{
-			console.log({body,docs});
 			if(functions.isContainedIn(body,docs[0])){
 				console.log("200: Data has not been changed");
 				response.json({statusCode: 200, body});

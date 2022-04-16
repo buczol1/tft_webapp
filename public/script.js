@@ -31,7 +31,7 @@ document.getElementById('submit').addEventListener('click', async() => {
 		summLvl.textContent = `LVL: ${summoner.summonerLevel}`;	
 	}
 	else{
-		console.log(status);
+		console.log("Err: " + status);
 	}
 });	
 
@@ -42,9 +42,8 @@ document.getElementById('tft-submit').addEventListener('click', async() => {
 	const response = await fetch(api_url);
 	const responseBody = await response.json();
 	const status = responseBody.statusCode;
-	const tftInfoJson = responseBody.body[0];
-
 	if(status === 200){
+		const tftInfoJson = responseBody.body[0];
 		if(tftInfoJson == null){
 			const p = document.createElement('p');
 			p.textContent = "This player did not played any tft ranked!";
@@ -65,7 +64,7 @@ document.getElementById('tft-submit').addEventListener('click', async() => {
 		}		
 	}
 	else{
-		console.log(status);
+		console.log("Err: " + status);
 	}
 });	
 
@@ -83,6 +82,6 @@ document.getElementById("info-update").addEventListener("click", async () => {
 		summLvl.textContent = `LVL: ${summoner.summonerLevel}`;
 	}
 	else{
-		console.log(status);
+		console.log("Err: " + status);
 	}
 });
