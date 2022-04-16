@@ -12,25 +12,28 @@ const tftLosses = document.getElementById('losses');
 const tftTotal = document.getElementById('total');
 const tftHS = document.getElementById('hotStreak');
 const tftWR = document.getElementById('top-1');
+
+//Get info about summoner from server
 document.getElementById('submit').addEventListener('click', async() => { 
 	let summNameValue = document.getElementById('mood').value;
 	const api_url = `summoner/${summNameValue}`;
 	const response = await fetch(api_url);
 	const responseBody = await response.json();
 	const status = responseBody.statusCode;
-	const summoner = responseBody.json;
+	const summoner = responseBody.body;
 	if(status === 200){
 		if(root.style.display == 'none')
 			root.style.display = 'block';
 		summid.textContent = `Summoner ID: ${summoner.id}`;
 		summName.textContent = `Summoner name: ${summoner.name}`;
-		summLvl.textContent = `LVL: ${summoner.summonerLevel}`;				
+		summLvl.textContent = `LVL: ${summoner.summonerLevel}`;	
 	}
 	else{
 		console.log(status);
 	}
 });	
 
+//Get tft info about summoner from server
 document.getElementById('tft-submit').addEventListener('click', async() => { 
 	const summonerID = summid.textContent.replace('Summoner ID: ','');
 	const api_url = `tft-info/${summonerID}`;
@@ -55,3 +58,21 @@ document.getElementById('tft-submit').addEventListener('click', async() => {
 		console.log(status);
 	}
 });	
+
+//Uptade info about summoner from riotapi
+document.getElementById("info-update").addEventListener("click", async () => {
+	const summonerID = summid.textContent.replace('Summoner ID: ','');
+	const api_url = `summoner-update/${summonerID}`;
+	const respons = await fetch(api_url);
+	const responseBody = await respons.json();
+	const status = responseBody.statusCode;
+	const summoner = responseBody.body;
+	if(status === 200){
+		summid.textContent = `Summoner ID: ${summoner.id}`;
+		summName.textContent = `Summoner name: ${summoner.name}`;
+		summLvl.textContent = `LVL: ${summoner.summonerLevel}`;
+	}
+	else{
+		console.log(status);
+	}
+});
