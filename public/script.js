@@ -41,18 +41,26 @@ document.getElementById('tft-submit').addEventListener('click', async() => {
 	const responseBody = await response.json();
 	const status = responseBody.statusCode;
 	const tftInfoJson = responseBody.body[0];
+
 	if(status === 200){
-		if(tftInfo.style.display == 'none')
-			tftInfo.style.display = 'block';
-		tftTier.textContent = `Tier: ${tftInfoJson.tier}`;
-		tftRank.textContent = `Rank: ${tftInfoJson.rank}`;
-		tftLp.textContent = `LP: ${tftInfoJson.leaguePoints}`;
-		let wr = (tftInfoJson.wins/tftInfoJson.losses)*100;
-		tftWR.textContent = `Top 1: ${wr}%`;
-		tftWins.textContent = `Top 1: ${tftInfoJson.wins}`;
-		tftLosses.textContent = `Losses: ${tftInfoJson.losses}`;
-		tftTotal.textContent = `Total: ${tftInfoJson.wins + tftInfoJson.losses}`;
-		tftHS.textContent = tftInfoJson.hotStreak? "Hotstreak: Tak": "Hotstreak: Nie";
+		if(tftInfoJson == null){
+			const p = document.createElement('p');
+			p.textContent = "This player did not played any tft ranked!";
+			root.append(p);
+		}
+		else{
+			if(tftInfo.style.display == 'none')
+				tftInfo.style.display = 'block';
+			tftTier.textContent = `Tier: ${tftInfoJson.tier}`;
+			tftRank.textContent = `Rank: ${tftInfoJson.rank}`;
+			tftLp.textContent = `LP: ${tftInfoJson.leaguePoints}`;
+			let wr = (tftInfoJson.wins/tftInfoJson.losses)*100;
+			tftWR.textContent = `Top 1: ${wr}%`;
+			tftWins.textContent = `Top 1: ${tftInfoJson.wins}`;
+			tftLosses.textContent = `Losses: ${tftInfoJson.losses}`;
+			tftTotal.textContent = `Total: ${tftInfoJson.wins + tftInfoJson.losses}`;
+			tftHS.textContent = tftInfoJson.hotStreak? "Hotstreak: true": "Hotstreak: false";
+		}		
 	}
 	else{
 		console.log(status);
