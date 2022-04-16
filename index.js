@@ -80,15 +80,26 @@ app.get(`/summoner-update/:summID`, async (request, response) => {
 //get tft info about summoner
 app.get('/tft-info/:summID', async (request, response) => {
 	const summID = request.params.summID;
-	const api_url = urls.urlStart + urls.tftLeague.replace('{summoner_id}',summID).replace('{api_key}',apiKey);
-	const fetch_repsonse = await fetch(api_url);
-	const body = await fetch_repsonse.json();
-	if(status(fetch_repsonse) === 200){
-		response.json({statusCode: status(fetch_repsonse),body});
-		db.insert(body[0]);		
-	}
-	else{
-		response.json({statusCode: status(fetch_repsonse)});
-	}
+	db.find({summonerId : summID, queueType: 'RANKED_TFT'}, async (err,docs) => {
+		//if info is not in db
+		if(Object.keys(docs).length === 0){
+			const api_url = urls.urlStart + urls.tftLeague.replace('{summoner_id}',summID).replace('{api_key}',apiKey);
+			const fetch_repsonse = await fetch(api_url);
+			const body = await fetch_repsonse.json();
+			if(status(fetch_repsonse) === 200){
+				console.log('200: got from riot api');
+				response.json({statusCode: status(fetch_repsonse),body});
+				db.insert(body[0]);		
+			}
+			else{
+				response.json({statusCode: status(fetch_repsonse)});
+			}
+		}
+		else{
+			console.log("200: got from db");
+			response.json({statusCode: 200, body: docs});
+		}
+	});
+
 });
 

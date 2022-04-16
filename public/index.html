@@ -3,29 +3,48 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="style.css" type="text/css">
-	<title>Stalkuj Przywoływacza</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="/css/style.css" type="text/css">
+	<title>TFT info</title>
 </head>
 <body>
-	<h1>Wpisz nazwę przywoływacza:</h1>
-	<input type="text" id="mood"><button id="submit">Submit</button>
-	<div id="info" style="display:none">
-		<p id="summName"></p>
-		<p id="summID"></p>
-		<p id="lvl"></p>
-		<button id="tft-submit">Get TFT info</button>
-		<button id="info-update">Update info</button>
-		<div id="tft-info" style="display:none">
-			<p id="tier"></p>
-			<p id="rank"></p>
-			<p id="lp"></p>
-			<p id="top-1"></p>
-			<p id="wins"></p>
-			<p id="losses"></p>
-			<p id="total"></p>
-			<p id="hotStreak"></p>
+	<div class="container">
+		<div class="row">
+			<h1>TFT APP</h1>
+			<div class="col-5">
+				<div class="form-control">
+					<label for="mood">Summoner name:</label><input type="text" id="mood" class="input-group"><button id="submit" class="btn btn-primary mt-2">Submit</button>
+				</div>				
+			</div>
+			<div class="col-7">
+				<div id="info" style="display:none">
+					<p id="summName"></p>
+					<p id="summID"></p>
+					<p id="lvl"></p>
+					<button class="btn btn-primary" id="tft-submit">Get TFT info</button>
+					<button class="btn btn-primary" id="info-update">Update info</button>
+					<div id="tft-info" style="display:none">
+						<div class="row mt-3">
+							<div class="col-6">
+								<p id="tier"></p>
+								<p id="rank"></p>
+								<p id="lp"></p>
+								<p id="hotStreak"></p>
+							</div>
+							<div class="col-6">
+								<p id="top-1"></p>
+								<p id="wins"></p>
+								<p id="losses"></p>
+								<p id="total"></p>
+							</div>
+						</div>
+					</div>
+				</div>				
+			</div>
+			<script src="/js/script.js"></script>
+			<script src="/js/bootstrap.min.js"></script>			
 		</div>
 	</div>
-	<script src="script.js"></script>
+
 </body>
 </html>
