@@ -52,7 +52,6 @@ app.get(`/summoner-update/:summID`, async (request, response) => {
 	const fetch_repsonse = await fetch(api_url);
 	const body = await fetch_repsonse.json();
 	if(status(fetch_repsonse) === 200){
-		console.log(body);
 		db.find({id: summID},(err,docs)=>{
 			console.log({body,docs});
 			if(functions.isContainedIn(body,docs[0])){
